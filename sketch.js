@@ -81,8 +81,10 @@ function draw() {
         textSize(18)
         text("Click Space Bar To Jump",200,190)
 
-        if(mousePressedOver(play)){
-            gamestate = "play"
+        if(mousePressedOver(play) || touches.length > 0){
+            touches = [];
+            gamestate = "play";
+            
         }
 
     }
@@ -108,8 +110,9 @@ function draw() {
           score = score + Math.round(getFrameRate()/60);
           ground.velocityX = -(5 + 1.5*score/250);
           
-          if(keyDown("space") && Amey.y > 100){
-              Amey.velocityY = - 7;
+          if(keyDown("space") && Amey.y > 100 || touches.length > 0){
+              touches = [];
+              Amey.velocityY = -7;
           }
 
           if(coinsGroup.isTouching(Amey)){
@@ -145,7 +148,8 @@ function draw() {
         textSize(18);
         text("Your Coins: "+coins,250,50);
         restart.visible = true;
-        if(mousePressedOver(restart)){
+        if(mousePressedOver(restart) || touches.length > 0){
+            touches = [];
             reset();
         }
        
